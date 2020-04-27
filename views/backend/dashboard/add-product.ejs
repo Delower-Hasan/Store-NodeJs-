@@ -1,0 +1,71 @@
+<%-include('../partials/header.ejs') %>
+    <%-include('./dashHeader.ejs') %>
+        <div class="content-wrapper">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <h2>Add Product</h2>
+                    </div>
+                    <form action='/product/post' method='post' enctype="multipart/form-data">
+
+                        <div class="form-group">
+                            <label for="name">Product image</label>
+                            <input type="file" multiple name='productImage' class="form-control" id="name" aria-describedby="emailHelp" placeholder="product image">
+                        </div>
+                        <div class="form-group">
+                            <label for="productTitle">Product Title</label>
+                            <input type="text" name='productTitle' class="form-control" id="productTitle" aria-describedby="emailHelp" placeholder="product Title">
+                        </div>
+                        <div class="form-group">
+                            <label for="slug">Product slug</label>
+                            <input type="text" name='slug' class="form-control" id="slug" aria-describedby="emailHelp" placeholder="product slug">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Product Price</label>
+                            <input type="text" name='productPrice' class="form-control" id="name" aria-describedby="emailHelp" placeholder="product Price">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Product summery</label>
+
+                            <textarea class="form-control" placeholder="product summery" name='productSummery' cols="30" rows="10"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Product description</label>
+                            <textarea class="form-control" placeholder="product description" name='productDescription' cols="30" rows="10"></textarea>
+
+
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Catagory</label>
+                            <select class='form-control' id='catId' name="catId">
+                                <option value="#">Select Catagory</option>
+                                <% for(let cat in catagories){ %>
+                                <option value="<%=catagories[cat]._id %>"><%=catagories[cat].catName %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">SubCatagory </label>
+                            <select id='subCatId' class='form-control' name="subCatId">
+                                <option value="#">Select SubCatagory</option>
+                              
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+
+
+
+
+
+            <%-include('./dashFooter.ejs') %>
+                <%-include('../partials/footer.ejs') %>
+                    <script src="/scripts/addProduct.js"></script>
+                    <script src="/scripts/addSubCat.js"></script>
+                    </body>
+
+                    </html>

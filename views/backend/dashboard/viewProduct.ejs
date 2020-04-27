@@ -1,0 +1,156 @@
+<%-include('../partials/header.ejs') %>
+    <%-include('./dashHeader.ejs') %>
+        <div class="content-wrapper">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">PRODUCT IMAGE</th>
+                                <th scope="col">TITLE</th>
+                                <th scope="col">PRICE</th>
+                                <th scope="col">SUMMERY</th>
+                                <th scope="col">DESCRIPTION</th>
+                                <th scope="col">SUBCATAGORY</th>
+                                <th scope="col">CATAGORY</th>
+                                <th scope="col">EDIT</th>
+                                <th scope="col">DELETE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(let product in productAll){ %>
+                                <tr>
+                                    <td>
+                                        <% productAll[product].productImage.forEach(img=>{ %>
+                                            <img src="/uploads/<%=img%>" alt="">
+                                            <% }) %>
+                                    </td>
+                                    <td>
+                                        <%= productAll[product].productTitle %>
+                                    </td>
+                                    <td>
+                                        <%= productAll[product].productPrice %>
+                                    </td>
+                                    <td>
+                                        <%= productAll[product].productSummery.substr(0, 20)+'....' %>
+                                    </td>
+                                    <td>
+                                        <%= productAll[product].productDescription.substr(0, 20)+'...' %>
+                                    </td>
+                                    <td>
+                                        <%= productAll[product].subCatId.subCat %>
+                                    </td>
+                                    <td>
+                                        <%= productAll[product].catId.catName %>
+                                    </td>
+                                    <td>
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<%= productAll[product]._id %>">
+                                        Edit
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal<%= productAll[product]._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel<%= productAll[product]._id %>" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel<%= productAll[product]._id %>">Edit Product</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action='/product/edit' method='post' enctype="multipart/form-data">
+                                                            <input type="hidden" name='editId' value="<%=productAll[product]._id %>">
+                                                            <div class="form-group">
+                                                                <label for="backendImg">Product image</label>
+                                                                <input type="file" multiple name='productImage' onchange="document.getElementById('showImg').src = window.URL.createObjectURL(this.files[0])"  class="form-control" id="backendImg" aria-describedby="emailHelp" placeholder="product image">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="name">Product image</label>
+                                                           
+                                                                    <% productAll[product].productImage.forEach(img=>{ %>
+                                                                        <img id='showImg' src="/uploads/<%=img%>" alt="">
+                                                                        <% }) %>
+                                                              
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="productTitle">Product Title</label>
+                                                                <input type="text" value='  <%= productAll[product].productTitle %>' name='productTitle' class="form-control" id="productTitle" aria-describedby="emailHelp" placeholder="product Title">
+                                                            </div>
+                                                           
+                                                            <div class="form-group">
+                                                                <label for="slug">Product slug</label>
+                                                                <input type="text" name='slug' value='  <%= productAll[product].slug %>' class="form-control" id="slug" aria-describedby="emailHelp" placeholder="product slug">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="name">Product Price</label>
+                                                                <input type="text" name='productPrice' value='  <%= productAll[product].productPrice %>' class="form-control" id="name" aria-describedby="emailHelp" placeholder="product Price">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="name">Product summery</label>
+
+                                                                <textarea class="form-control" placeholder="product summery" name='productSummery' cols="30" rows="10"><%= productAll[product].productSummery %></textarea>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="name">Product description</label>
+                                                                <textarea class="form-control" placeholder="product description" name='productDescription' cols="30" rows="10"><%= productAll[product].productDescription %></textarea>
+
+
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="name">Catagory</label>
+                                                                <select class='form-control' id='catId' name="catId">
+                                                                <option value="#">Select Catagory</option>
+                                                                <% for(let cat in catagories){ %>
+                                                                <option value="<%=catagories[cat]._id %>"><%=catagories[cat].catName %></option>
+                                                                <% } %>
+                                                            </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="name">SubCatagory </label>
+                                                                <select id='subCatId' class='form-control' name="subCatId">
+                                                                
+                                                            <option value=" <%= productAll[product].subCatId._id %>"> <%= productAll[product].subCatId.subCat %></option>
+                                                            </select>
+                                                            </div>
+
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Update</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </td>
+                                    <td>
+                                        <a class='btn btn-danger' href="/product/delete/<%= productAll[product]._id %>">Delete</a>
+                                    </td>
+
+                                </tr>
+                                <%  }%>
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+
+
+
+            <%-include('./dashFooter.ejs') %>
+                <%-include('../partials/footer.ejs') %>
+                    <script src="/scripts/addSubCat.js"></script>
+                   
+                    </body>
+
+                    </html>

@@ -1,0 +1,140 @@
+<%-include('../partials/header.ejs') %>
+    <%-include('./dashHeader.ejs') %>
+        <div class="content-wrapper">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <h2>Add SubCatagory</h2>
+                    </div>
+                    <form action='/subCatagory/subCat' method='post'>
+                        <div class="form-group">
+                            <label for="catId">Add Catagory </label>
+                            <select name="catId" class='form-control' id="catId">
+                           <option value="#">Select Catagory</option>
+                           <% for(let cat in AllCat){%>
+                        <option value="<%= AllCat[cat]._id %>"><%= AllCat[cat].catName %></option>
+                          <% } %>
+                           
+                           </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="subCatId">Add SubCatagory</label>
+                            <input type="text" name='subCat' class="form-control" id="subCatId" aria-describedby="emailHelp" placeholder="Enter Name">
+                        </div>
+
+
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+
+
+                </div>
+                <div class="col-md-6">
+                    <div class='mb-4'>
+                        <h2>View SubCatagory</h2>
+                    </div>
+                    <div class="form">
+                        <table class="table">
+                            <thead>
+                                <tr>
+
+                                    <th scope="col">CATAGORY</th>
+                                    <th scope="col">SUBCATAGORY</th>
+                                    <th scope="col">ACTION</th>
+                                    <th scope="col">ACTION</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for(let cat in subCat){ %>
+
+                                    <tr>
+                                        <td>
+                                            <%=subCat[cat].catId.catName %>
+                                        </td>
+                                        <td>
+                                            <%=subCat[cat].subCat %>
+                                        </td>
+                                        <td>
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<%=subCat[cat]._id %>">
+                                   Edit
+                                    </button>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal<%=subCat[cat]._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Catagory</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action='/subCatagory/edit' method='post'>
+
+
+                                                                <input type="hidden" name='subcatId' class="form-control" id="name" value='<%=subCat[cat]._id %>' aria-describedby="emailHelp" placeholder="Enter Name">
+
+                                                                <div class="form-group">
+                                                                    <label for="name">Add Catagory</label>
+                                                                    <select name="catId" class='form-control' id="catid">
+                                                                        <option value="#">Select Catagory</option>
+                                                                        <% for(let cat in AllCat){%>
+                                                                        <option value="<%= AllCat[cat]._id %>"><%= AllCat[cat].catName %></option>
+                                                                        <% } %>
+                                                                        
+                                                                        </select>
+
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="name">Add Catagory</label>
+
+                                                                    <input type="text" name='subCat' class="form-control" id="name" value='<%=subCat[cat].subCat %>' aria-describedby="emailHelp" placeholder="Enter Name">
+                                                                </div>
+
+
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                                            </form>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="/subCatagory/delete/<%= subCat[cat]._id %>" class='btn btn-danger'>Delete</a>
+                                        </td>
+                                    </tr>
+
+                                    <% } %>
+
+
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <%-include('./dashFooter.ejs') %>
+                <%-include('../partials/footer.ejs') %>
+
+                    </script>
+                    </body>
+
+                    </html>
